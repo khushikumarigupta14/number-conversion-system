@@ -1,32 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 const Converter = () => {
   const [inputValue, setInputValue] = useState("");
-    const [fromBase, setFromBase] = useState("decimal");
-    const [toBase, setToBase] = useState("binary");
-  //   const [result, setResult] = useState("");
-  //   const [error, setError] = useState("");
-const bases = {
-  decimal: 10,
-  binary: 2,
-  octal: 8,
-  hexadecimal: 16,
-};
-useEffect(() => {
-  setError("");
-  if (!inputValue.trim()) return;
-
-  const regexPatterns = {
-    decimal: /^[0-9]*$/,
-    binary: /^[01]*$/,
-    octal: /^[0-7]*$/,
-    hexadecimal: /^[0-9a-fA-F]*$/,
+  const [fromBase, setFromBase] = useState("decimal");
+  const [toBase, setToBase] = useState("binary");
+    const [result, setResult] = useState("");
+    const [error, setError] = useState("");
+  const bases = {
+    decimal: 10,
+    binary: 2,
+    octal: 8,
+    hexadecimal: 16,
   };
+  useEffect(() => {
+    setError("");
+    if (!inputValue.trim()) return;
 
-  if (!regexPatterns[fromBase].test(inputValue)) {
-    setError("Invalid number for the selected base.");
-  }
-}, [inputValue, fromBase]);
+    const regexPatterns = {
+      decimal: /^[0-9]*$/,
+      binary: /^[01]*$/,
+      octal: /^[0-7]*$/,
+      hexadecimal: /^[0-9a-fA-F]*$/,
+    };
+
+    if (!regexPatterns[fromBase].test(inputValue)) {
+      setError("Invalid number for the selected base.");
+    }
+  }, [inputValue, fromBase]);
+  const convertNumber = useCallback(() => {
+    setError("");
+    setResult("");
+
+    if (!inputValue.trim()) {
+      setError("Please enter a number.");
+      return;
+    }
+
+    try {
+      let decimalValue = parseInt(inputValue, bases[fromBase]);
+      if (isNaN(decimalValue)) throw new Error("Invalid number format.");
+
+      let convertedValue = decimalValue.toString(bases[toBase]).toUpperCase();
+      setResult(convertedValue);
+    } catch (error) {
+      setError("Invalid input for the selected base.");
+    }
+  }, [inputValue, fromBase, toBase]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
