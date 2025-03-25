@@ -105,6 +105,17 @@ const Converter = () => {
               Reset
             </button>
           </div>
+          {/* Result or Error Display */}
+          {error && (
+            <p className="mt-4 text-red-600 text-center font-semibold">
+              {error}
+            </p>
+          )}
+          {result && (
+            <div className="mt-4 p-3 bg-green-100 text-green-700 rounded-lg text-center font-semibold">
+              Converted Value: {result}
+            </div>
+          )}
         </div>
       </div>
     </div>
