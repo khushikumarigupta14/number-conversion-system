@@ -1,1 +1,26 @@
 @import "tailwindcss";
+
+.neumorphism {
+  background: #f0f0f0;
+  border-radius: 15px;
+  box-shadow: 5px 5px 10px #d1d1d1, -5px -5px 10px #ffffff;
+  transition: all 0.3s ease-in-out;
+}
+
+.neumorphism:hover {
+  box-shadow: inset 3px 3px 8px #d1d1d1, inset -3px -3px 8px #ffffff;
+}
+
+button {
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  box-shadow: 2px 2px 5px #bebebe, -2px -2px 5px #ffffff;
+  transform: scale(1.05);
+}
+
+button:active {
+  box-shadow: inset 2px 2px 5px #bebebe, inset -2px -2px 5px #ffffff;
+  transform: scale(0.95);
+}

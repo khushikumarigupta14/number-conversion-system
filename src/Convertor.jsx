@@ -4,8 +4,8 @@ const Converter = () => {
   const [inputValue, setInputValue] = useState("");
   const [fromBase, setFromBase] = useState("decimal");
   const [toBase, setToBase] = useState("binary");
-    const [result, setResult] = useState("");
-    const [error, setError] = useState("");
+  const [result, setResult] = useState("");
+  const [error, setError] = useState("");
   const bases = {
     decimal: 10,
     binary: 2,
@@ -61,33 +61,52 @@ const Converter = () => {
           className="w-full p-3 rounded-lg text-lg border border-gray-300 focus:ring-blue-400 focus:outline-none focus:ring-2"
           placeholder="Enter a number"
         />
+        <div className="flex items-center justify-center mt-4 space-x-3">
+          <select
+            value={fromBase}
+            onChange={(e) => setFromBase(e.target.value)}
+            className="p-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+          >
+            {Object.keys(bases).map((key) => (
+              <option key={key} value={key}>
+                {key.charAt(0).toUpperCase() + key.slice(1)}
+              </option>
+            ))}
+          </select>
+          <span>➡️</span> {/* Arrow indicating conversion */}
+          <select
+            value={toBase}
+            onChange={(e) => setToBase(e.target.value)}
+            className="p-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+          >
+            {Object.keys(bases).map((key) => (
+              <option key={key} value={key}>
+                {key.charAt(0).toUpperCase() + key.slice(1)}
+              </option>
+            ))}
+          </select>
+          {/* Buttons */}
+          <div className="flex flex-col items-center mt-6 space-y-3">
+            <button
+              onClick={convertNumber}
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-lg"
+            >
+              Convert
+            </button>
+
+            <button
+              onClick={() => {
+                setInputValue("");
+                setResult("");
+                setError("");
+              }}
+              className="w-full px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition text-lg"
+            >
+              Reset
+            </button>
+          </div>
+        </div>
       </div>
-      <div className="flex items-center justify-center mt-4 space-x-3">
-        <select
-          value={fromBase}
-          onChange={(e) => setFromBase(e.target.value)}
-          className="p-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
-        >
-          {Object.keys(bases).map((key) => (
-            <option key={key} value={key}>
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-            </option>
-          ))}
-        </select>
-        <span>➡️</span> {/* Arrow indicating conversion */}
-        <select
-          value={toBase}
-          onChange={(e) => setToBase(e.target.value)}
-          className="p-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
-        >
-          {Object.keys(bases).map((key) => (
-            <option key={key} value={key}>
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-            </option>
-          ))}
-        </select>
-      </div>
-      ;
     </div>
   );
 };
