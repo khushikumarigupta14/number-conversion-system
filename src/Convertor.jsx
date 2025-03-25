@@ -12,6 +12,22 @@ const bases = {
   octal: 8,
   hexadecimal: 16,
 };
+useEffect(() => {
+  setError("");
+  if (!inputValue.trim()) return;
+
+  const regexPatterns = {
+    decimal: /^[0-9]*$/,
+    binary: /^[01]*$/,
+    octal: /^[0-7]*$/,
+    hexadecimal: /^[0-9a-fA-F]*$/,
+  };
+
+  if (!regexPatterns[fromBase].test(inputValue)) {
+    setError("Invalid number for the selected base.");
+  }
+}, [inputValue, fromBase]);
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
       <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-md">
