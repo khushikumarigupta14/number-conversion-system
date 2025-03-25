@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
+import { ArrowRight, RefreshCw } from "lucide-react";
 
 const Converter = () => {
   const [inputValue, setInputValue] = useState("");
@@ -6,33 +7,20 @@ const Converter = () => {
   const [toBase, setToBase] = useState("binary");
   const [result, setResult] = useState("");
   const [error, setError] = useState("");
+
   const bases = {
     decimal: 10,
     binary: 2,
     octal: 8,
     hexadecimal: 16,
   };
-  useEffect(() => {
-    setError("");
-    if (!inputValue.trim()) return;
 
-    const regexPatterns = {
-      decimal: /^[0-9]*$/,
-      binary: /^[01]*$/,
-      octal: /^[0-7]*$/,
-      hexadecimal: /^[0-9a-fA-F]*$/,
-    };
-
-    if (!regexPatterns[fromBase].test(inputValue)) {
-      setError("Invalid number for the selected base.");
-    }
-  }, [inputValue, fromBase]);
   const convertNumber = useCallback(() => {
     setError("");
     setResult("");
 
     if (!inputValue.trim()) {
-      setError("Please enter a number.");
+      setError("⚠️ Please enter a number.");
       return;
     }
 
@@ -43,29 +31,34 @@ const Converter = () => {
       let convertedValue = decimalValue.toString(bases[toBase]).toUpperCase();
       setResult(convertedValue);
     } catch (error) {
-      setError("Invalid input for the selected base.");
+      setError("❌ Invalid input for the selected base.", error);
     }
   }, [inputValue, fromBase, toBase]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
-      <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-md">
-        <h1 className="text-2xl font-bold text-gray-800 text-center mb-4">
-          Number System Converter
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200 p-4 sm:p-6">
+      <div className="bg-gray-100 shadow-xl rounded-2xl p-6 sm:p-8 max-w-lg w-full">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 text-center mb-6">
+          🔢 Number System Converter
         </h1>
+
         {/* Input Field */}
         <input
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          className="w-full p-3 rounded-lg text-lg border border-gray-300 focus:ring-blue-400 focus:outline-none focus:ring-2"
-          placeholder="Enter a number"
+          className="w-full p-3 border-none rounded-lg text-lg bg-gray-100 shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="Enter a number..."
+          aria-label="Enter number"
         />
-        <div className="flex items-center justify-center mt-4 space-x-3">
+
+        {/* Base Selection */}
+        <div className="flex flex-col sm:flex-row items-center justify-between mt-5 space-y-3 sm:space-y-0 sm:space-x-4">
           <select
             value={fromBase}
             onChange={(e) => setFromBase(e.target.value)}
-            className="p-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+            className="p-3 bg-gray-100 shadow-md rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-auto"
+            aria-label="Select source base"
           >
             {Object.keys(bases).map((key) => (
               <option key={key} value={key}>
@@ -73,11 +66,14 @@ const Converter = () => {
               </option>
             ))}
           </select>
-          <span>➡️</span> {/* Arrow indicating conversion */}
+
+          <ArrowRight size={28} className="text-gray-600 mx-2" />
+
           <select
             value={toBase}
             onChange={(e) => setToBase(e.target.value)}
-            className="p-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+            className="p-3 bg-gray-100 shadow-md rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-auto"
+            aria-label="Select target base"
           >
             {Object.keys(bases).map((key) => (
               <option key={key} value={key}>
@@ -85,38 +81,42 @@ const Converter = () => {
               </option>
             ))}
           </select>
-          {/* Buttons */}
-          <div className="flex flex-col items-center mt-6 space-y-3">
-            <button
-              onClick={convertNumber}
-              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-lg"
-            >
-              Convert
-            </button>
-
-            <button
-              onClick={() => {
-                setInputValue("");
-                setResult("");
-                setError("");
-              }}
-              className="w-full px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition text-lg"
-            >
-              Reset
-            </button>
-          </div>
-          {/* Result or Error Display */}
-          {error && (
-            <p className="mt-4 text-red-600 text-center font-semibold">
-              {error}
-            </p>
-          )}
-          {result && (
-            <div className="mt-4 p-3 bg-green-100 text-green-700 rounded-lg text-center font-semibold">
-              Converted Value: {result}
-            </div>
-          )}
         </div>
+
+        {/* Buttons */}
+        <div className="flex flex-col sm:flex-row justify-between mt-6 space-y-3 sm:space-y-0 sm:space-x-4">
+          <button
+            onClick={convertNumber}
+            className="w-full sm:w-auto px-4 py-2 bg-blue-500 text-white text-lg rounded-lg hover:bg-blue-600 transition-all duration-300"
+          >
+            Convert
+          </button>
+
+          <button
+            onClick={() => {
+              setInputValue("");
+              setResult("");
+              setError("");
+            }}
+            className="w-full sm:w-auto px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition-all duration-300 flex items-center justify-center"
+          >
+            <RefreshCw size={22} className="mr-2" />
+            Reset
+          </button>
+        </div>
+
+        {/* Result & Error Message */}
+        {error && (
+          <p className="mt-4 text-red-600 text-center font-semibold bg-red-100 p-2 rounded-lg shadow-md">
+            {error}
+          </p>
+        )}
+
+        {result && (
+          <p className="mt-4 text-lg text-center font-semibold text-green-600 bg-green-100 p-3 rounded-lg shadow-md">
+            ✅ Converted Value: {result}
+          </p>
+        )}
       </div>
     </div>
   );
