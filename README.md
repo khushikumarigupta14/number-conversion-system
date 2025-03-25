@@ -1,8 +1,9 @@
 # Number System Converter 🔢
 A **powerful, lightweight, and user-friendly** Number System Converter built using **React.js**, **Vite**, and **Tailwind CSS**. This tool allows you to effortlessly **convert numbers** between **Decimal, Binary, Octal, and Hexadecimal** formats with real-time updates.  
-🌍 Live Demo
-🔗 Try the Converter Online (Add your deployed website link here)
-🚀 Features
+## 🌍 Live Demo
+ [🔗 Try the Converter Online ](https://numbersystem-convertor.netlify.app/)
+ 
+## 🚀 Features
 - ✅ Real-time Conversion – Instantly converts numbers between Decimal, Binary, Octal, and Hexadecimal as you type.
 - ✅ Bidirectional Conversion – Supports conversions in any direction (e.g., Decimal → Binary, Binary → Hex, etc.).
 - ✅ Auto Input Validation – Detects invalid characters based on the selected number system and alerts the user.
@@ -14,7 +15,7 @@ A **powerful, lightweight, and user-friendly** Number System Converter built usi
 - ✅ Ultra-Fast Performance – Powered by Vite for near-instant UI updates and state management.
 - ✅ Built with Modern Technologies – Developed using React.js, Tailwind CSS, and Lucide Icons for a sleek interface.
 
-🎯 How It Works
+## 🎯 How It Works
 - Select or enter the number system of your input (Decimal, Binary, Octal, Hexadecimal).
 -  Input your numeric value, and the tool instantly converts it to all other supported number systems.
 -  Copy the converted values with a single click.
@@ -34,10 +35,10 @@ A **powerful, lightweight, and user-friendly** Number System Converter built usi
 | [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) | Core scripting language |
 | [HTML5 & CSS3](https://developer.mozilla.org/en-US/docs/Web) | Structuring and styling the UI |
 ## 📸 Screenshot
-![Preview](https://yourwebsite.com/preview.png)
+![Preview](https://numbersystem-convertor.netlify.app//preview.png)
 
 ## 🛠️ Installation
 Clone this repository:
 ```sh
-git clone https://github.com/your-username/number-system-converter.git
-cd number-system-converter
+git clone https://github.com/khushikumarigupta14/number-conversion-system
+cd number-conversion-system
