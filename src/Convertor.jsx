@@ -15,23 +15,43 @@ const Converter = () => {
     hexadecimal: 16,
   };
 
+  const baseValidation = {
+    binary: /^[01]+$/,
+    octal: /^[0-7]+$/,
+    decimal: /^[0-9]+$/,
+    hexadecimal: /^[0-9A-Fa-f]+$/,
+  };
+
+  const examples = {
+    binary: "Example: 1010 (Binary for 10)",
+    octal: "Example: 12 (Octal for 10)",
+    decimal: "Example: 10 (Standard decimal format)",
+    hexadecimal: "Example: A (Hexadecimal for 10)",
+  };
+
+  const validateInput = (value, base) => {
+    if (!value.trim()) {
+      throw new Error("⚠️ Please enter a number.");
+    }
+
+    if (!baseValidation[base].test(value)) {
+      throw new Error(`❌ Invalid input for ${base}. ${examples[base]}`);
+    }
+  };
+
   const convertNumber = useCallback(() => {
     setError("");
     setResult("");
 
-    if (!inputValue.trim()) {
-      setError("⚠️ Please enter a number.");
-      return;
-    }
-
     try {
-      let decimalValue = parseInt(inputValue, bases[fromBase]);
-      if (isNaN(decimalValue)) throw new Error("Invalid number format.");
+      validateInput(inputValue, fromBase);
 
+      let decimalValue = parseInt(inputValue, bases[fromBase]);
       let convertedValue = decimalValue.toString(bases[toBase]).toUpperCase();
+
       setResult(convertedValue);
     } catch (error) {
-      setError("❌ Invalid input for the selected base.", error);
+      setError(error.message);
     }
   }, [inputValue, fromBase, toBase]);
 
