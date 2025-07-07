@@ -1,4 +1,4 @@
-# Number **System** Converter 🔢
+# Number **System** **Converter** 🔢
 A **powerful, lightweight, and user-friendly** Number System Converter built using **React.js**, **Vite**, and **Tailwind CSS**. This tool allows you to effortlessly **convert numbers** between **Decimal, Binary, Octal, and Hexadecimal** formats with real-time updates.  
 ## 🌍 Live Demo
  [🔗 Try the Converter Online ](https://numbersystem-convertor.netlify.app/)
